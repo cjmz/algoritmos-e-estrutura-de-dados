@@ -27,6 +27,6 @@ Este projeto está licenciado sob a licença MIT. Sinta-se à vontade para utili
 
 ## Contato
 
-Se você tiver alguma dúvida ou quiser entrar em contato, você pode me encontrar no GitHub em @seu-usuario.
+Se você tiver alguma dúvida ou quiser entrar em contato, você pode me encontrar no GitHub em @cjmz ou no Twitter no @cjmelo_.
 
 Aproveite o projeto e bons estudos!
