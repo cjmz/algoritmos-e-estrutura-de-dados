@@ -6,6 +6,7 @@ func main() {
 	una := []int{5, 8, 9, 2, 3, 4, 7, 6, 1}
 
 	fmt.Println(bubbleSort(una))
+	fmt.Println(classicBubbleSort(una))
 }
 
 // O BubbleSort é um algoritmo de ordenação simples.
@@ -22,6 +23,26 @@ func bubbleSort(arr []int) []int {
 			// Compara os elementos adjacentes e troca-os de posição se o primeiro elemento for maior que o segundo
 			if arr[i] > arr[j] {
 				arr[i], arr[j] = arr[j], arr[i]
+			}
+		}
+	}
+
+	return arr
+}
+
+func classicBubbleSort(arr []int) []int {
+	n := len(arr)
+	for i := 0; i < n-1; i++ {
+		swapped := false
+
+		for j := 0; j < n-i-1; j++ {
+			if arr[j] > arr[j+1] {
+				arr[j], arr[j+1] = arr[j+1], arr[j]
+				swapped = true
+			}
+
+			if !swapped {
+				break
 			}
 		}
 	}
