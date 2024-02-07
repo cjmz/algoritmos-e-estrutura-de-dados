@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// Algoritmo estudado no capítulo sobre recursão do livro do Jen Wengrow
 func main() {
 	arr := []int{1, 2, 3, 4, 5}
 
