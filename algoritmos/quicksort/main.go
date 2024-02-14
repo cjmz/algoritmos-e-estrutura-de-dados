@@ -7,7 +7,9 @@ import (
 func main() {
 	arr := []int{5, 36, 15, 98, 14, 85}
 
-	fmt.Println(quicksort(arr, 0, len(arr)-1))
+	quicksort(arr, 0, len(arr)-1)
+
+	fmt.Println(arr)
 }
 
 func quicksort(arr []int, low int, high int) []int {
