@@ -45,12 +45,14 @@ package main
 import "fmt"
 
 type Node struct {
-	data int
-	next *Node
+	data     int
+	next     *Node
+	previous *Node
 }
 
 type LinkedList struct {
 	head *Node
+	tail *Node
 }
 
 func (l *LinkedList) Insert(data int) {
@@ -67,6 +69,8 @@ func (l *LinkedList) Insert(data int) {
 		current = current.next
 	}
 
+	newNode.previous = current
+	l.tail = newNode
 	current.next = newNode
 }
 
@@ -78,6 +82,7 @@ func (l *LinkedList) InsertAtBeginning(data int) {
 	}
 
 	current := l.head
+	current.previous = newNode
 	newNode.next = current
 	l.head = newNode
 }
@@ -107,13 +112,38 @@ func (l *LinkedList) DeleteByData(data int) {
 		current = current.next
 	}
 
-	// fmt.Println(current)
 	if current.next == nil && current.data == data {
 		previous.next = nil
 		fmt.Printf("Successfully deleted: %d \n", data)
 		return
 	}
 
+}
+
+func (l *LinkedList) SelectByInverseNthElement(n int) {
+	current := l.tail
+	i := 0
+
+	// if n == 1 {
+	// 	fmt.Printf("Element %d found! Data: %d \n", n, current.data)
+	// 	return
+	// }
+
+	for current != nil {
+		if i == n {
+			fmt.Printf("Element %d found! Data: %d \n", n, current.data)
+			return
+		}
+
+		if current.previous != nil {
+			current = current.previous
+		}
+
+		i++
+	}
+
+	// if current != nil
+	fmt.Printf("Element %d not found! \n", n)
 }
 
 func (l *LinkedList) Display() {
@@ -125,7 +155,7 @@ func (l *LinkedList) Display() {
 	}
 
 	for current != nil {
-		fmt.Printf("Node found! Value: %d - Next: %d\n", current.data, current.next)
+		fmt.Printf("Node found! Value: %d - Previous: %d - Next: %d\n", current.data, current.previous, current.next)
 		current = current.next
 	}
 
@@ -137,11 +167,12 @@ func main() {
 	list.Insert(10)
 	list.Insert(30)
 	list.InsertAtBeginning(5)
-	list.DeleteByData(10)
+	// list.DeleteByData(10)
 	list.InsertAtBeginning(45)
 	list.Insert(105)
-	list.DeleteByData(105)
+	// list.DeleteByData(105)
 
+	list.SelectByInverseNthElement(2)
 	list.Display()
 	// fmt.Println("Hello World")
 }
