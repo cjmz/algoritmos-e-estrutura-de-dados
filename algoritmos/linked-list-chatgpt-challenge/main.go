@@ -1,6 +1,6 @@
 // Lista Encadeada Simples
 
-// 1. Implementar uma Lista Encadeada Simples:
+// 1. Implementar uma Lista Encadeada Simples: - Feito
 // Criar uma estrutura de nó que contém um dado e um ponteiro para o próximo nó.
 // Implementar funções para inserir nós no início e no final da lista.
 // Implementar uma função para imprimir todos os valores da lista.
@@ -82,6 +82,40 @@ func (l *LinkedList) InsertAtBeginning(data int) {
 	l.head = newNode
 }
 
+func (l *LinkedList) DeleteByData(data int) {
+	current := l.head
+	previous := &Node{}
+
+	if current == nil {
+		fmt.Println("Linked list is empty")
+		return
+	}
+
+	if l.head.data == data {
+		l.head = l.head.next
+		fmt.Printf("Succesfully deleted: %d \n", data)
+		return
+	}
+
+	for current.next != nil {
+		if current.data == data {
+			previous.next = current.next
+			fmt.Printf("Successfully deleted: %d \n", data)
+		}
+
+		previous = current
+		current = current.next
+	}
+
+	// fmt.Println(current)
+	if current.next == nil && current.data == data {
+		previous.next = nil
+		fmt.Printf("Successfully deleted: %d \n", data)
+		return
+	}
+
+}
+
 func (l *LinkedList) Display() {
 	current := l.head
 
@@ -91,7 +125,7 @@ func (l *LinkedList) Display() {
 	}
 
 	for current != nil {
-		fmt.Printf("Node found! Value: %d \n", current.data)
+		fmt.Printf("Node found! Value: %d - Next: %d\n", current.data, current.next)
 		current = current.next
 	}
 
@@ -103,8 +137,10 @@ func main() {
 	list.Insert(10)
 	list.Insert(30)
 	list.InsertAtBeginning(5)
+	list.DeleteByData(10)
 	list.InsertAtBeginning(45)
 	list.Insert(105)
+	list.DeleteByData(105)
 
 	list.Display()
 	// fmt.Println("Hello World")
