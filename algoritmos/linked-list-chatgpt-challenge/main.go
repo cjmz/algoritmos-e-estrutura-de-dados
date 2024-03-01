@@ -10,8 +10,8 @@
 // A função deve ser capaz de lidar com a exclusão do primeiro ou do último nó, assim como qualquer nó intermediário. - ok
 
 // 3. Encontrar o n-ésimo Elemento a partir do Final:
-// Escreva uma função que encontre o n-ésimo elemento a partir do final da lista.
-// Implemente isso sem calcular o comprimento total da lista (tente usar o conceito de dois ponteiros).
+// Escreva uma função que encontre o n-ésimo elemento a partir do final da lista. - ok
+// Implemente isso sem calcular o comprimento total da lista (tente usar o conceito de dois ponteiros). - ok
 
 // 4. Inverter uma Lista Encadeada:
 // Escreva uma função que inverta os nós de uma lista encadeada.
@@ -45,12 +45,14 @@ package main
 import "fmt"
 
 type Node struct {
-	data int
-	next *Node
+	data     int
+	next     *Node
+	previous *Node
 }
 
 type LinkedList struct {
 	first *Node
+	last  *Node
 }
 
 func (l *LinkedList) Insert(data int) {
@@ -68,6 +70,8 @@ func (l *LinkedList) Insert(data int) {
 		current = current.next
 	}
 
+	l.last = newNode
+	newNode.previous = current
 	current.next = newNode
 	fmt.Printf("Node value %d added to the end \n", newNode.data)
 }
@@ -81,6 +85,7 @@ func (l *LinkedList) InsertAtBeginning(data int) {
 		return
 	}
 
+	l.first.previous = newNode
 	newNode.next = l.first
 	l.first = newNode
 	fmt.Printf("Node value %d added to the beginning \n", newNode.data)
@@ -138,6 +143,44 @@ func (l *LinkedList) PrintList() {
 	fmt.Printf("Last node found! Value: %d | Next: %p \n", current.data, current)
 }
 
+func (l *LinkedList) FoundByNthElement(n int) {
+	current := l.last
+	i := 0
+
+	for current != nil {
+		if i == n {
+			fmt.Printf("Node %dNth found! Value: %d\n", n, current.data)
+			return
+		}
+
+		i++
+		// fmt.Printf("Node %dNth found! Value: %d\n", n, current.data)
+		// fmt.Println(i)
+		current = current.previous
+	}
+
+	fmt.Println("Element not found!")
+}
+
+func (l *LinkedList) Invert() {
+	if l.first == nil {
+		fmt.Println("Linked list empty!")
+		return
+	}
+
+	l.first, l.last = l.last, l.first
+
+	current := l.last
+
+	for current.previous != nil {
+
+		current.previous, current.next = current.next, current.previous
+		current = current.previous
+	}
+
+	fmt.Println("List inverted")
+}
+
 func main() {
 	list := LinkedList{}
 
@@ -153,5 +196,18 @@ func main() {
 	list.PrintList()
 
 	fmt.Println("=========================")
+
+	list.FoundByNthElement(0)
+
+	fmt.Println("=========================")
+
+	list.Invert()
+
+	fmt.Println("=========================")
+
+	list.PrintList()
+
+	fmt.Println("=========================")
+
 	// fmt.Println("Hello, let`s start again, it is just to review our learning! Don`t worry!")
 }
