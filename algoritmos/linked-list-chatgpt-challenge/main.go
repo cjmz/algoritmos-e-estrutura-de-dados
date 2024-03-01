@@ -124,11 +124,6 @@ func (l *LinkedList) SelectByInverseNthElement(n int) {
 	current := l.tail
 	i := 0
 
-	// if n == 1 {
-	// 	fmt.Printf("Element %d found! Data: %d \n", n, current.data)
-	// 	return
-	// }
-
 	for current != nil {
 		if i == n {
 			fmt.Printf("Element %d found! Data: %d \n", n, current.data)
@@ -142,7 +137,6 @@ func (l *LinkedList) SelectByInverseNthElement(n int) {
 		i++
 	}
 
-	// if current != nil
 	fmt.Printf("Element %d not found! \n", n)
 }
 
