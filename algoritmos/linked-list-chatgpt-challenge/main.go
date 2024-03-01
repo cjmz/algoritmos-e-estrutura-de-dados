@@ -1,13 +1,13 @@
 // Lista Encadeada Simples
 
-// 1. Implementar uma Lista Encadeada Simples: - Feito
-// Criar uma estrutura de nó que contém um dado e um ponteiro para o próximo nó.
-// Implementar funções para inserir nós no início e no final da lista.
-// Implementar uma função para imprimir todos os valores da lista.
+// 1. Implementar uma Lista Encadeada Simples:
+// Criar uma estrutura de nó que contém um dado e um ponteiro para o próximo nó. - OK
+// Implementar funções para inserir nós no início e no final da lista. - ok
+// Implementar uma função para imprimir todos os valores da lista. - ok
 
 // 2. Deletar um Nó da Lista:
-// Escreva uma função que deleta um nó com um valor específico da lista.
-// A função deve ser capaz de lidar com a exclusão do primeiro ou do último nó, assim como qualquer nó intermediário.
+// Escreva uma função que deleta um nó com um valor específico da lista. - ok
+// A função deve ser capaz de lidar com a exclusão do primeiro ou do último nó, assim como qualquer nó intermediário. - ok
 
 // 3. Encontrar o n-ésimo Elemento a partir do Final:
 // Escreva uma função que encontre o n-ésimo elemento a partir do final da lista.
@@ -44,6 +44,114 @@ package main
 
 import "fmt"
 
+type Node struct {
+	data int
+	next *Node
+}
+
+type LinkedList struct {
+	first *Node
+}
+
+func (l *LinkedList) Insert(data int) {
+	newNode := &Node{data: data}
+
+	if l.first == nil {
+		l.first = newNode
+		fmt.Printf("Node value %d added to the end \n", newNode.data)
+		return
+	}
+
+	current := l.first
+
+	for current.next != nil {
+		current = current.next
+	}
+
+	current.next = newNode
+	fmt.Printf("Node value %d added to the end \n", newNode.data)
+}
+
+func (l *LinkedList) InsertAtBeginning(data int) {
+	newNode := &Node{data: data}
+
+	if l.first == nil {
+		l.first = newNode
+		fmt.Printf("Node value %d added to the beginning \n", newNode.data)
+		return
+	}
+
+	newNode.next = l.first
+	l.first = newNode
+	fmt.Printf("Node value %d added to the beginning \n", newNode.data)
+}
+
+func (l *LinkedList) DeleteByValue(data int) {
+	if l.first == nil {
+		fmt.Println("Linked list empty!")
+		return
+	}
+
+	if l.first.data == data {
+		l.first = l.first.next
+		fmt.Printf("Value %d found and removed from the beginning! \n", data)
+		return
+	}
+
+	current := l.first.next
+	previous := l.first
+
+	for current.next != nil {
+		if current.data == data {
+			previous.next = current.next
+			fmt.Printf("Value %d found and removed! \n", data)
+			return
+		}
+
+		previous = current
+		current = current.next
+	}
+
+	if current.data == data {
+		previous.next = nil
+		fmt.Printf("Value %d found and removed from the end \n", data)
+		return
+	}
+
+	fmt.Printf("Value %d not found \n", data)
+
+}
+
+func (l *LinkedList) PrintList() {
+	if l.first == nil {
+		fmt.Println("Linked list empty!")
+		return
+	}
+
+	current := l.first
+
+	for current.next != nil {
+		fmt.Printf("Node found! Value: %d | Next: %p \n", current.data, current)
+		current = current.next
+	}
+
+	fmt.Printf("Last node found! Value: %d | Next: %p \n", current.data, current)
+}
+
 func main() {
-	fmt.Println("Hello, let`s start again, it is just to review our learning! Don`t worry!")
+	list := LinkedList{}
+
+	list.Insert(10)
+	list.InsertAtBeginning(350)
+	list.Insert(35)
+	list.InsertAtBeginning(290)
+	list.DeleteByValue(10)
+	list.DeleteByValue(15)
+
+	fmt.Println("=========================")
+
+	list.PrintList()
+
+	fmt.Println("=========================")
+	// fmt.Println("Hello, let`s start again, it is just to review our learning! Don`t worry!")
 }
