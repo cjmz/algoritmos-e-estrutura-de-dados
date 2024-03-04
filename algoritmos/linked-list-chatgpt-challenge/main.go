@@ -162,21 +162,24 @@ func (l *LinkedList) FoundByNthElement(n int) {
 	fmt.Println("Element not found!")
 }
 
-func (l *LinkedList) Invert() {
+func (l *LinkedList) Reverse() {
 	if l.first == nil {
 		fmt.Println("Linked list empty!")
 		return
 	}
 
-	l.first, l.last = l.last, l.first
+	current := l.first
+	var next *Node
+	var prev *Node
 
-	current := l.last
-
-	for current.previous != nil {
-
-		current.previous, current.next = current.next, current.previous
-		current = current.previous
+	for current != nil {
+		next = current.next
+		current.next = prev
+		prev = current
+		current = next
 	}
+
+	l.first = prev
 
 	fmt.Println("List inverted")
 }
@@ -201,7 +204,7 @@ func main() {
 
 	fmt.Println("=========================")
 
-	list.Invert()
+	list.Reverse()
 
 	fmt.Println("=========================")
 
