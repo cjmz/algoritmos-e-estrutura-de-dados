@@ -1,6 +1,7 @@
 //
 // Alguns exercícios do Livro Algoritmos Teoria e Prátima do Cormen
 // 1 - Implementar um Insert e um Delete em uma Lista Ligada
+// 2 - Implemente uma pilha usando PUSH e POP
 //
 
 package main
@@ -10,12 +11,12 @@ import "fmt"
 type Node struct {
 	data int
 	next *Node
-	// prev *Node
+	prev *Node
 }
 
 type LinkedList struct {
 	head *Node
-	// tail *Node
+	tail *Node
 }
 
 func (l *LinkedList) Insert(data int) {
@@ -35,6 +36,8 @@ func (l *LinkedList) Insert(data int) {
 	}
 
 	current.next = newNode
+	newNode.prev = current
+	l.tail = newNode
 
 	fmt.Printf("New node added as latest node: %d\n", data)
 }
@@ -68,6 +71,16 @@ func (l *LinkedList) DeleteByValue(data int) {
 	fmt.Printf("Node with value %d not found.\n", data)
 }
 
+func (l *LinkedList) Push(data int) {
+	l.Insert(data)
+}
+
+func (l *LinkedList) Pop() {
+	d := l.tail
+	l.tail.prev.next = nil
+	fmt.Printf("Node popped %d\n", d.data)
+}
+
 func main() {
 	l := LinkedList{}
 
@@ -76,4 +89,9 @@ func main() {
 
 	l.DeleteByValue(12)
 	l.DeleteByValue(38)
+
+	l.Push(90)
+	l.Push(80)
+
+	l.Pop()
 }
