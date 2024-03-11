@@ -14,7 +14,7 @@
 // Implemente isso sem calcular o comprimento total da lista (tente usar o conceito de dois ponteiros). - ok
 
 // 4. Inverter uma Lista Encadeada:
-// Escreva uma função que inverta os nós de uma lista encadeada.
+// Escreva uma função que inverta os nós de uma lista encadeada. - ok
 // Tente fazer isso iterativamente e, em seguida, recursivamente.
 // Lista Duplamente Encadeada
 
@@ -184,6 +184,19 @@ func (l *LinkedList) Reverse() {
 	fmt.Println("List inverted")
 }
 
+func (l *LinkedList) RecursiveReverse(current *Node) {
+	if current == nil {
+		return
+	}
+
+	next := current.next
+	prev := current.previous
+
+	current.next = prev
+
+	l.RecursiveReverse(next)
+}
+
 func main() {
 	list := LinkedList{}
 
@@ -205,6 +218,14 @@ func main() {
 	fmt.Println("=========================")
 
 	list.Reverse()
+
+	fmt.Println("=========================")
+
+	list.PrintList()
+
+	fmt.Println("=========================")
+
+	list.RecursiveReverse(list.first)
 
 	fmt.Println("=========================")
 
