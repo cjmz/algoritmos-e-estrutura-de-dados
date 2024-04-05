@@ -25,7 +25,7 @@ func (t *BinaryTree) InsertRecursive(data int) *BinaryTree {
 		fmt.Printf("Value inserted to Binary Tree: %d \n", data)
 
 	} else {
-		t.Root.Insert(data)
+		t.Root.InsertNode(data)
 	}
 
 	return t
@@ -36,16 +36,16 @@ func (t *BinaryTree) InsertRecursive(data int) *BinaryTree {
 // The parent node is updated accordingly, and the new node is inserted as the left or right child of the parent node.
 func (t *BinaryTree) Insert(data int) {
 	newNode := &Node{Key: data}
-	parent := &Node{}
+	var parent *Node
 	current := t.Root
 
 	for current != nil {
 		parent = current
 
-		if current.Key < newNode.Key {
-			current = current.Left
-		} else {
+		if newNode.Key >= current.Key {
 			current = current.Right
+		} else {
+			current = current.Left
 		}
 	}
 
@@ -67,7 +67,7 @@ func (t *BinaryTree) Insert(data int) {
 // If the current node is nil, the method returns without making any changes.
 // If the data is less than or equal to the current node's key, the method recursively calls insert on the left child.
 // If the data is greater than the current node's key, the method recursively calls insert on the right child.
-func (n *Node) Insert(data int) {
+func (n *Node) InsertNode(data int) {
 	if n == nil {
 		return
 	}
@@ -76,7 +76,7 @@ func (n *Node) Insert(data int) {
 		if n.Left == nil {
 			n.Left = &Node{Key: data}
 		} else {
-			n.Left.Insert(data)
+			n.Left.InsertNode(data)
 		}
 	}
 
@@ -84,16 +84,27 @@ func (n *Node) Insert(data int) {
 		if n.Right == nil {
 			n.Right = &Node{Key: data}
 		} else {
-			n.Right.Insert(data)
+			n.Right.InsertNode(data)
 		}
 	}
 
 	fmt.Printf("Value inserted to Binary Tree: %d \n", data)
 }
 
+func InorderTreeWalk(n *Node) {
+	if n != nil {
+		InorderTreeWalk(n.Left)
+		fmt.Printf("Node founded: %d\n", n.Key)
+		InorderTreeWalk(n.Right)
+	}
+}
+
 func main() {
 	t := BinaryTree{}
 	t.Insert(4)
 	t.Insert(9)
-	fmt.Println("Hello World!")
+	t.Insert(8)
+	t.Insert(10)
+
+	InorderTreeWalk(t.Root)
 }
