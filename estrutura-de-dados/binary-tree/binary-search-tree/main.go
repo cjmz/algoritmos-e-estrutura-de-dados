@@ -31,6 +31,7 @@ func (t *BinaryTree) InsertRecursive(data int) *BinaryTree {
 	return t
 }
 
+// Tree Insert
 // insert inserts a new node with the given data into the binary tree.
 // The method starts at the root node and traverses the tree until it finds the appropriate position for the new node.
 // The parent node is updated accordingly, and the new node is inserted as the left or right child of the parent node.
@@ -91,6 +92,27 @@ func (n *Node) InsertNode(data int) {
 	fmt.Printf("Value inserted to Binary Tree: %d \n", data)
 }
 
+// Transplant any node to any another node
+//
+// This function will work as an helper to move nodes when we want to
+// delete any node from our binary search tree
+//
+// U: It is the node that should be removed
+// V: It is the node that will substitute the U node
+func (t *BinaryTree) Transplant(u *Node, v *Node) {
+	if u.Parent == nil {
+		t.Root = v
+	} else if u == u.Parent.Left {
+		u.Parent.Left = v
+	} else {
+		u.Parent.Right = v
+	}
+
+	if v != nil {
+		v.Parent = u.Parent
+	}
+}
+
 func InorderTreeWalk(n *Node) {
 	if n != nil {
 		InorderTreeWalk(n.Left)
@@ -105,6 +127,12 @@ func main() {
 	t.Insert(9)
 	t.Insert(8)
 	t.Insert(10)
+
+	InorderTreeWalk(t.Root)
+
+	t.Transplant(t.Root.Right, t.Root.Right.Right)
+
+	fmt.Printf("Transplant Execution!\n")
 
 	InorderTreeWalk(t.Root)
 }

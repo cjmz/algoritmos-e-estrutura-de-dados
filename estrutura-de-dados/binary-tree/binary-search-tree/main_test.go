@@ -30,6 +30,31 @@ func TestInsert(t *testing.T) {
 	checkTreeStructure(t, tree.Root, expectedKeys)
 }
 
+func TestTransplant(t *testing.T) {
+	tree := &BinaryTree{}
+
+	tree.Insert(60)
+
+	if tree.Root == nil {
+		t.Errorf("Expected root node to be created, got nil")
+	}
+
+	if tree.Root.Key != 60 {
+		t.Errorf("Expected root node key to be 60, got %d", tree.Root.Key)
+	}
+
+	tree.Insert(90)
+	tree.Insert(10)
+	tree.Insert(15)
+	tree.Insert(85)
+	tree.Insert(6)
+
+	expectedKeys := []int{60, 90, 10, 15, 85, 6}
+
+	checkTreeStructure(t, tree.Root, expectedKeys)
+
+}
+
 func TestInsertRecursive(t *testing.T) {
 	// Create a new binary tree
 	tree := &BinaryTree{}
