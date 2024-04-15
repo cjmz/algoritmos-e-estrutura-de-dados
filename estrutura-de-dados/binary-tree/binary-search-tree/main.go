@@ -113,6 +113,49 @@ func (t *BinaryTree) Transplant(u *Node, v *Node) {
 	}
 }
 
+// Tree Delete
+//
+// # This function will remove a node from a tree
+//
+// Z: Node that should be removed
+func (t *BinaryTree) Remove(z *Node) {
+	if z.Left == nil {
+		t.Transplant(z, z.Right)
+	} else if z.Right == nil {
+		t.Transplant(z, z.Left)
+	} else {
+		m := t.TreeMinimun()
+
+		if m.Parent != z {
+			t.Transplant(m, m.Right)
+			m.Right = z.Right
+			m.Right.Parent = m
+		}
+
+		t.Transplant(z, m)
+		m.Left = z.Left
+		m.Left.Parent = m
+	}
+}
+
+// TreeMinimun
+//
+// Search the minimun value from a binary search tree
+func (t *BinaryTree) TreeMinimun() *Node {
+	if t.Root == nil {
+		fmt.Println("Tree empty")
+		return &Node{}
+	}
+
+	current := t.Root
+
+	for current.Left != nil {
+		current = current.Left
+	}
+
+	return current
+}
+
 func InorderTreeWalk(n *Node) {
 	if n != nil {
 		InorderTreeWalk(n.Left)
@@ -126,6 +169,7 @@ func main() {
 	t.Insert(4)
 	t.Insert(9)
 	t.Insert(8)
+	t.Insert(2)
 	t.Insert(10)
 
 	InorderTreeWalk(t.Root)
@@ -133,6 +177,14 @@ func main() {
 	t.Transplant(t.Root.Right, t.Root.Right.Right)
 
 	fmt.Printf("Transplant Execution!\n")
+
+	InorderTreeWalk(t.Root)
+
+	fmt.Printf("Minumun tree value: %d\n", t.TreeMinimun().Key)
+
+	fmt.Printf("Remove value: \n")
+
+	t.Remove(t.Root.Right.Left)
 
 	InorderTreeWalk(t.Root)
 }
